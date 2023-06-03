@@ -33,7 +33,7 @@ fn check_files(file_args: &Vec<String>, searched: Vec<String>) {
         .map(|f| return_splitted_path(f.to_owned()))
         .any(|f| search(f, file_args[1].as_str(), &mut found_file));
 
-    println!("{:#?}Here", found_file);
+    // println!("{:#?}Here", found_file);
 
     if !found_file {
         if !searched.is_empty() && !is_dir(searched[0].as_str()) {
@@ -42,7 +42,7 @@ fn check_files(file_args: &Vec<String>, searched: Vec<String>) {
                 NEXT_DIR_PATH.push(format!("{}/", HOME_DIR))
             };
         }
-        println!("Here too");
+        // println!("Here too");
         searched
             .iter()
             .map(|f| return_splitted_path(f.to_owned()))
@@ -51,7 +51,7 @@ fn check_files(file_args: &Vec<String>, searched: Vec<String>) {
                 let length = next_dir.len();
 
                 unsafe { NEXT_DIR_PATH.push(format!("{}/", next_dir[length - 1])) }
-                println!("{:#?}", Path::new(unsafe { &NEXT_DIR_PATH.join("") }));
+                // println!("{:#?}", Path::new(unsafe { &NEXT_DIR_PATH.join("") }));
                 if Path::exists(Path::new(unsafe { &NEXT_DIR_PATH.join("") }))
                     && is_dir(unsafe { &NEXT_DIR_PATH.join("") })
                 {
@@ -98,9 +98,9 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
         println!("Do you want to open it in VS code? (y/n)");
 
         let typed = get_input();
-        println!("{:?}", typed.len());
+        // println!("{:?}", typed.len());
 
-        println!("{:?}", typed);
+        // println!("{:?}", typed);
         match typed.as_str() {
             "y\n" => {
                 println!("Opening file");

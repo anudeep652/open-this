@@ -3,13 +3,6 @@
 version = 3
 
 [[package]]
-name = "file-path-finder"
-version = "0.1.0"
-dependencies = [
- "open",
-]
-
-[[package]]
 name = "is-docker"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -42,6 +35,13 @@ checksum = "d16814a067484415fda653868c9be0ac5f2abd2ef5d951082a5f2fe1b3662944"
 dependencies = [
  "is-wsl",
  "pathdiff",
+]
+
+[[package]]
+name = "open-this"
+version = "0.1.0"
+dependencies = [
+ "open",
 ]
 
 [[package]]

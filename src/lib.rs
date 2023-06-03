@@ -2,10 +2,12 @@ use std::{
     fs::{self, DirEntry},
     io::{self},
     path::{Path, PathBuf},
+    process::Command,
 };
 
-pub const HOME_DIR: &str = "/home/anudeep";
+pub static mut HOME_DIR: &str = "/home/anudeep";
 pub static mut NEXT_DIR_PATH: Vec<String> = vec![];
+const VS_CODE: &str = "code";
 
 fn is_dir(name: &str) -> bool {
     let path = PathBuf::from(name);
@@ -93,7 +95,7 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
     if temp[length - 1] == file_name {
         *found_file = true;
         println!("file found at {}", f);
-        println!("Do you want to open it? (y/n)");
+        println!("Do you want to open it in VS code? (y/n)");
 
         let typed = get_input();
         println!("{:?}", typed.len());
@@ -102,7 +104,13 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
         match typed.as_str() {
             "y\n" => {
                 println!("Opening file");
-                open_file(f.as_str())
+                Command::new(VS_CODE)
+                    .arg(f)
+                    .spawn()
+                    .expect("Failed to launch software.");
+
+                // uncomment this to open it in default file explorer
+                // open_file(f.as_str())
             }
             "n\n" => {
                 println!("Ok, Goodbye");
@@ -115,6 +123,7 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
     false
 }
 
+#[allow(unused)]
 fn open_file(path: &str) {
     match open::that(Path::new(path)) {
         Ok(_) => println!("Opened"),

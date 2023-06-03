@@ -7,5 +7,4 @@ edition = "2021"
 
 [dependencies]
 open = "4.1.0"
-walkdir = "2.3.3"
-regex = "1.4.5"
+

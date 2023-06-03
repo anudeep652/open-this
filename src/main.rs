@@ -1,6 +1,6 @@
-use std::{env::args, fs::DirEntry, path::Path};
+use std::{env::args, path::Path};
 
-use file_path_finder::{check_files, read_dirs, HOME_DIR};
+use file_path_finder::{read_dirs, search_all_dirs, HOME_DIR, NEXT_DIR_PATH};
 
 fn main() {
     let args = args().collect::<Vec<String>>();
@@ -10,19 +10,8 @@ fn main() {
 
     if Path::exists(Path::new(HOME_DIR)) {
         let files = read_dirs(HOME_DIR);
-        let new_f: Vec<_> = files
-            .into_iter()
-            .map(|f| change_to_str(f))
-            .map(|f| f.replace("DirEntry(", ""))
-            // .map(|f| f.trim_start_matches("\\").to_owned())
-            .collect();
-        println!("{:#?}", new_f);
-        check_files(args[1].as_str(), new_f);
+        unsafe { NEXT_DIR_PATH.push(HOME_DIR.to_owned()) };
+
+        search_all_dirs(files, &args)
     }
-
-    // println!("{:#?}", args[1]);
-}
-
-fn change_to_str(f: DirEntry) -> String {
-    format!("{:?}", f)
 }

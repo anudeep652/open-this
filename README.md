@@ -47,14 +47,14 @@ Now you can run anywhere in your terminal like this:
 open-this FILE_OR_FOLDER_NAME
 ```
 
-> Currently it opens the file/folder only in vs code 
+> Currently it opens the file/folder only in vs code
 
 <br>
 
 ## Todo
 
 - [ ] Add support for opening the file/folder in desired editor
-- [ ] Make codebase more readable 
+- [ ] Make codebase more readable
 - [ ] Add better error handling
 - [ ] get username of OS
 - [ ] Multiple OS support
@@ -63,5 +63,3 @@ open-this FILE_OR_FOLDER_NAME
 <br>
 
 ## Contributing
-
-If you are a rustacean and want to contribute to this project, feel free to open a PR.

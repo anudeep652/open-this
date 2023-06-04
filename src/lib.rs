@@ -6,7 +6,7 @@ use std::{
 };
 
 pub const USER: &str = "anudeep";
-pub static mut HOME_DIR: &str = "/home/anudeep";
+pub static mut HOME_DIR: String = String::new();
 const VS_CODE: &str = "code";
 
 fn is_dir(name: &str) -> bool {
@@ -117,4 +117,8 @@ fn change_to_str(f: DirEntry) -> String {
 fn return_splitted_path(f: String) -> String {
     let (first, _) = f.split_at(1).1.split_at(f.len() - 3);
     String::from(first)
+}
+
+pub fn set_user(user: &str) {
+    unsafe { HOME_DIR = ["/home/", user].concat() }
 }

@@ -51,13 +51,14 @@ open-this FILE_OR_FOLDER_NAME
 
 <br>
 
-## Future plans
+## Todo
 
-- Add support for opening the file/folder in desired editor
-- Make codebase more readable 
-- Add better error handling
-- get username of OS
-- Multiple OS support
+- [ ] Add support for opening the file/folder in desired editor
+- [ ] Make codebase more readable 
+- [ ] Add better error handling
+- [ ] get username of OS
+- [ ] Multiple OS support
+- [ ] Search indication
 
 <br>
 

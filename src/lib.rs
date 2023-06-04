@@ -2,11 +2,11 @@ use std::{
     fs::{self, DirEntry},
     io::{self},
     path::{Path, PathBuf},
-    process::Command,
+    process::{self, Command},
 };
 
+pub const USER: &str = "anudeep";
 pub static mut HOME_DIR: &str = "/home/anudeep";
-pub static mut NEXT_DIR_PATH: Vec<String> = vec![];
 const VS_CODE: &str = "code";
 
 fn is_dir(name: &str) -> bool {
@@ -26,55 +26,33 @@ pub fn read_dirs(path: &str) -> Vec<DirEntry> {
 
 #[allow(clippy::single_char_pattern)]
 #[allow(clippy::toplevel_ref_arg)]
-fn check_files(file_args: &Vec<String>, searched: Vec<String>) {
+fn check_files(file_args: &Vec<String>, searched: &mut [String]) {
     let mut found_file = false;
     searched
-        .iter()
+        .iter_mut()
         .map(|f| return_splitted_path(f.to_owned()))
         .any(|f| search(f, file_args[1].as_str(), &mut found_file));
 
-    // println!("{:#?}Here", found_file);
+    searched
+        .iter()
+        .map(|f| return_splitted_path(f.to_owned()))
+        .for_each(|f| {
+            if is_dir(f.as_str()) {
+                let paths = read_dirs(f.as_str());
 
-    if !found_file {
-        if !searched.is_empty() && !is_dir(searched[0].as_str()) {
-            unsafe {
-                NEXT_DIR_PATH.clear();
-                NEXT_DIR_PATH.push(format!("{}/", HOME_DIR))
-            };
-        }
-        // println!("Here too");
-        searched
-            .iter()
-            .map(|f| return_splitted_path(f.to_owned()))
-            .for_each(|f| {
-                let ref next_dir = f.split("/").map(|f| f.to_owned()).collect::<Vec<String>>();
-                let length = next_dir.len();
-
-                unsafe { NEXT_DIR_PATH.push(format!("{}/", next_dir[length - 1])) }
-                // println!("{:#?}", Path::new(unsafe { &NEXT_DIR_PATH.join("") }));
-                if Path::exists(Path::new(unsafe { &NEXT_DIR_PATH.join("") }))
-                    && is_dir(unsafe { &NEXT_DIR_PATH.join("") })
-                {
-                    let files = read_dirs(unsafe { &NEXT_DIR_PATH.join("") });
-                    search_all_dirs(files, file_args)
-                } else {
-                    unsafe {
-                        NEXT_DIR_PATH.clear();
-                        NEXT_DIR_PATH.push(format!("{}/", HOME_DIR))
-                    };
-                }
-            })
-    }
+                search_all_dirs(paths, file_args)
+            }
+        })
 }
 
 pub fn search_all_dirs(files: Vec<DirEntry>, args: &Vec<String>) {
-    let new_f: Vec<_> = files
+    let mut new_f: Vec<_> = files
         .into_iter()
         .map(change_to_str)
         .map(|f| f.replace("DirEntry(", ""))
         .collect();
     // println!("{:#?}", new_f);
-    check_files(args, new_f);
+    check_files(args, &mut new_f);
 }
 
 fn get_input() -> String {
@@ -84,7 +62,6 @@ fn get_input() -> String {
     if input.as_str().trim().len() > 1 {
         println!("Please type y or n");
     }
-
     input
 }
 
@@ -108,12 +85,14 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
                     .arg(f)
                     .spawn()
                     .expect("Failed to launch software.");
+                process::exit(1)
 
                 // uncomment this to open it in default file explorer
                 // open_file(f.as_str())
             }
             "n\n" => {
                 println!("Ok, Goodbye");
+                process::exit(1)
             }
 
             &_ => {}

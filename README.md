@@ -56,7 +56,7 @@ open-this FILE_OR_FOLDER_NAME
 - [ ] Add support for opening the file/folder in desired editor
 - [ ] Make codebase more readable
 - [ ] Add better error handling
-- [ ] get username of OS
+- [x] <strike> get username of OS </strike>
 - [ ] Multiple OS support
 - [ ] Search indication
 

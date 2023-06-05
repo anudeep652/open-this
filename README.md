@@ -63,3 +63,4 @@ open-this FILE_OR_FOLDER_NAME
 <br>
 
 ## Contributing
+If you are a rustacean and willing to contribute, feel free to open a PR.

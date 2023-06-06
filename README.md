@@ -25,11 +25,15 @@ git clone https://github.com/anudeep652/open-this.git
 cd open-this
 ```
 
-```sh
-cargo run FILE_OR_FOLDER_NAME
+```
+cargo run FILE_OR_FOLDER_NAME [options]
+
+
+OPTIONS:
+    code    Open the file/folder in vs code
 ```
 
-> Remember to replace FILE_OR_FOLDER_NAME with the file or folder you want to open
+> Remember to replace FILE_OR_FOLDER_NAME with the file or folder you want to open and if we dont specify the options, it will open the file/folder in default software launcher.
 
 <br>
 OR
@@ -43,11 +47,12 @@ cargo install --path .
 
 Now you can run anywhere in your terminal like this:
 
-```sh
-open-this FILE_OR_FOLDER_NAME
 ```
+open-this FILE_OR_FOLDER_NAME [OPTIONS]
 
-> Currently it opens the file/folder only in vs code
+OPTIONS:
+    code    Open the file/folder in vs code
+```
 
 <br>
 
@@ -63,4 +68,5 @@ open-this FILE_OR_FOLDER_NAME
 <br>
 
 ## Contributing
+
 If you are a rustacean and willing to contribute, feel free to open a PR.

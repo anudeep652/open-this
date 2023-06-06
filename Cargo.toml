@@ -7,5 +7,7 @@ edition = "2021"
 
 [dependencies]
 open = "4.1.0"
+console = "0.15.7"
+
 
 

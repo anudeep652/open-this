@@ -31,7 +31,7 @@ fn check_files(file_args: &Vec<String>, searched: &mut [String]) {
     searched
         .iter_mut()
         .map(|f| return_splitted_path(f.to_owned()))
-        .any(|f| search(f, file_args[1].as_str(), &mut found_file));
+        .any(|f| search(f, file_args, &mut found_file));
 
     searched
         .iter()
@@ -66,13 +66,13 @@ fn get_input() -> String {
 }
 
 #[allow(clippy::single_char_pattern)]
-fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
+fn search(f: String, file_args_: &[String], found_file: &mut bool) -> bool {
     let temp = f.split("/").collect::<Vec<&str>>();
     let length = temp.len();
-    if temp[length - 1] == file_name {
+    if temp[length - 1] == file_args_[1].as_str() {
         *found_file = true;
-        println!("file found at {}", f);
-        println!("Do you want to open it in VS code? (y/n)");
+        println!("\nfile found at {}", f);
+        println!("Do you want to open it (y/n)");
 
         let typed = get_input();
         // println!("{:?}", typed.len());
@@ -80,18 +80,18 @@ fn search(f: String, file_name: &str, found_file: &mut bool) -> bool {
         // println!("{:?}", typed);
         match typed.as_str() {
             "y\n" => {
-                println!("Opening file");
-                Command::new(VS_CODE)
-                    .arg(f)
-                    .spawn()
-                    .expect("Failed to launch software.");
-                process::exit(1)
-
-                // uncomment this to open it in default file explorer
-                // open_file(f.as_str())
+                if file_args_.len() > 2 && file_args_[2].contains("code") {
+                    println!("Opening file in VS Code");
+                    open_in_app(VS_CODE, f);
+                } else {
+                    println!("Opening file");
+                    open_file(f.as_str());
+                    process::exit(1)
+                }
             }
             "n\n" => {
                 println!("Ok, Goodbye");
+
                 process::exit(1)
             }
 
@@ -121,4 +121,26 @@ fn return_splitted_path(f: String) -> String {
 
 pub fn set_user(user: &str) {
     unsafe { HOME_DIR = ["/home/", user].concat() }
+}
+
+// pub fn loading() {
+//     let frames: Vec<char> = vec!['◐', '◓', '◑', '◒'];
+
+//     for _ in 0..10 {
+//         for frame in &frames {
+//             print!("\rLoading... {}", frame);
+//             std::io::stdout().flush().unwrap();
+//             thread::sleep(Duration::from_millis(100));
+//         }
+//     }
+
+//     println!("\rLoading... Done!");
+// }
+
+fn open_in_app(app: &str, path: String) {
+    Command::new(app)
+        .arg(path)
+        .spawn()
+        .expect("Failed to launch software.");
+    process::exit(1)
 }

@@ -9,13 +9,17 @@ fn main() {
     let user = get_user().unwrap();
     set_user(user.as_str());
 
-    let args = args().collect::<Vec<String>>();
+    // let thread = thread::spawn(|| {
+    //     loading();
+    // });
 
+    let args = args().collect::<Vec<String>>();
     if Path::exists(Path::new(unsafe { HOME_DIR.as_str() })) {
         let files = read_dirs(unsafe { HOME_DIR.as_str() });
 
         search_all_dirs(files, &args)
     }
+    // thread.join().unwrap();
 }
 
 fn get_user() -> Option<String> {

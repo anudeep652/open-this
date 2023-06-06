@@ -30,7 +30,10 @@ cargo run FILE_OR_FOLDER_NAME [options]
 
 
 OPTIONS:
-    -app software_name    Open the file/folder in the specified software
+    -app [software_name]    Open the file/folder in the specified software
+
+    software_name:
+        code - Visual Studio Code
 ```
 
 > Remember to replace FILE_OR_FOLDER_NAME with the file or folder you want to open and if we dont specify the options, it will open the file/folder in default software launcher.
@@ -51,7 +54,10 @@ Now you can run anywhere in your terminal like this:
 open-this FILE_OR_FOLDER_NAME [OPTIONS]
 
 OPTIONS:
-    -app software_name    Open the file/folder in the specified software
+    -app [software_name]    Open the file/folder in the specified software
+
+    software_name:
+        code - Visual Studio Code
 ```
 
 <br>

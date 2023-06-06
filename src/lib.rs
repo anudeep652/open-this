@@ -80,9 +80,11 @@ fn search(f: String, file_args_: &[String], found_file: &mut bool) -> bool {
         // println!("{:?}", typed);
         match typed.as_str() {
             "y\n" => {
-                if file_args_.len() > 2 && file_args_[2].contains("code") {
-                    println!("Opening file in VS Code");
-                    open_in_app(VS_CODE, f);
+                if file_args_.len() > 2 && file_args_[2].eq_ignore_ascii_case("-app") {
+                    if file_args_.len() > 3 && file_args_[3].eq_ignore_ascii_case("code") {
+                        println!("Opening file in VS Code");
+                        open_in_app(VS_CODE, f);
+                    }
                 } else {
                     println!("Opening file");
                     open_file(f.as_str());

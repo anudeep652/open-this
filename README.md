@@ -70,6 +70,7 @@ OPTIONS:
 - [x] <strike> get username of OS </strike>
 - [ ] Multiple OS support
 - [ ] Search indication
+- [ ] Searching files concurrently 
 
 <br>
 

@@ -14,6 +14,11 @@ fn main() {
     // });
 
     let args = args().collect::<Vec<String>>();
+    if args.len() < 2 {
+        println!("Not enough arguments, please provide a file name to search for");
+        exit(1);
+    }
+
     if Path::exists(Path::new(unsafe { HOME_DIR.as_str() })) {
         let files = read_dirs(unsafe { HOME_DIR.as_str() });
 
